@@ -2,6 +2,7 @@ package com.jerechen.notchadapter.type
 
 import android.app.Activity
 import android.graphics.Rect
+import android.text.TextUtils
 import android.util.Log
 import com.jerechen.notchadapter.INotchScreen
 import com.jerechen.notchadapter.utils.ScreenUtil
@@ -19,6 +20,10 @@ class OppoNotchScreen : INotchScreen {
 
     override fun getNotchInfo(activity: Activity, notchInfoCallback: INotchScreen.NotchInfoCallback) {
         val notchInfo = getNotchInfo()
+        //没有刘海屏
+        if (TextUtils.isEmpty(notchInfo)) {
+            return
+        }
         val left: Int
         val top: Int
         val right: Int

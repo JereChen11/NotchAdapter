@@ -22,6 +22,10 @@ class HuaWeiNotchScreen: INotchScreen {
         val hwNotchSizeUtil = cl.loadClass("com.huawei.android.util.HwNotchSizeUtil")
         val get = hwNotchSizeUtil.getMethod("getNotchSize")
         val notchSizeArray = get.invoke(hwNotchSizeUtil) as IntArray
+        //没有刘海屏
+        if (notchSizeArray.size < 2) {
+            return
+        }
         val notchWidth = notchSizeArray[0]
         val notchHeight = notchSizeArray[1]
 
