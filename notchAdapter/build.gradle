@@ -15,7 +15,7 @@ ext {
     siteUrl = 'https://github.com/JereChen11/NotchAdapter'
     gitUrl = 'https://github.com/JereChen11/NotchAdapter.git'
 
-    libraryVersion = '1.0.2'
+    libraryVersion = '1.0.3'
 
     developerId = 'jerechen11'
     developerName = 'Jere Chen'
@@ -36,8 +36,8 @@ android {
     defaultConfig {
         minSdkVersion 21
         targetSdkVersion 29
-        versionCode 3
-        versionName "1.0.2"
+        versionCode 4
+        versionName "1.0.3"
 
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
         consumerProguardFiles "consumer-rules.pro"
@@ -79,8 +79,8 @@ group = "cn.jerechen"
 //发布到JCenter上的项目名字，必须填写
 def libName = "notch-adapter"
 // 版本号，下次更新是只需要更改版本号即可
-version = "1.0.2"
-/**  上面配置后上传至jcenter后的编译路径是这样的： compile 'cn.jerechen:notch-adapter:1.0.2'  **/
+version = "1.0.3"
+/**  上面配置后上传至jcenter后的编译路径是这样的： compile 'cn.jerechen:notch-adapter:1.0.3'  **/
 
 //生成源文件
 task sourcesJar(type: Jar) {

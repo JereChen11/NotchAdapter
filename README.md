@@ -3,7 +3,7 @@
 使用方法：
 1. 在 app 级别的 build.gradle 下加入依赖：
 ```groovy
-implementation 'cn.jerechen:notchAdapter:1.0.0'
+implementation 'cn.jerechen:notchAdapter:1.0.3'
 ```
 2. 在需要适配刘海的Activity中
 ```kotlin
