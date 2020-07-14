@@ -15,42 +15,58 @@ import com.jerechen.notchadapter.utils.ScreenUtil
 class OppoNotchScreen : INotchScreen {
 
     override fun isContainNotch(activity: Activity): Boolean {
-        return activity.packageManager.hasSystemFeature("com.oppo.feature.screen.heteromorphism")
+        try {
+            return activity.packageManager.hasSystemFeature("com.oppo.feature.screen.heteromorphism")
+        } catch (e: Exception) {
+            Log.e("OppoNotchScreen", "isContainNotch ${e.message}")
+        }
+        return false
     }
 
-    override fun getNotchInfo(activity: Activity, notchInfoCallback: INotchScreen.NotchInfoCallback) {
-        val notchInfo = getNotchInfo()
-        //没有刘海屏
-        if (TextUtils.isEmpty(notchInfo)) {
-            return
-        }
-        val left: Int
-        val top: Int
-        val right: Int
-        val bottom: Int
-        Log.e("jereTest", "Oppo notchInfo = $notchInfo")
-        val notchSplit: List<String> = notchInfo.split(":")
-        //左上角坐标
-        val leftTopPoint = notchSplit[0]
-        //右下角坐标
-        val rightBottomPoint = notchSplit[1]
-        val leftAndTop = leftTopPoint.split(",")
-        val rightAndBottom = rightBottomPoint.split(",")
+    override fun getNotchInfo(
+        activity: Activity,
+        notchInfoCallback: INotchScreen.NotchInfoCallback
+    ) {
+        try {
+            //没有刘海屏
+            if (!isContainNotch(activity)) {
+                return
+            }
+            val notchInfo = getNotchInfo()
+            //没有刘海屏
+            if (TextUtils.isEmpty(notchInfo)) {
+                return
+            }
+            val left: Int
+            val top: Int
+            val right: Int
+            val bottom: Int
+            Log.e("jereTest", "Oppo notchInfo = $notchInfo")
+            val notchSplit: List<String> = notchInfo.split(":")
+            //左上角坐标
+            val leftTopPoint = notchSplit[0]
+            //右下角坐标
+            val rightBottomPoint = notchSplit[1]
+            val leftAndTop = leftTopPoint.split(",")
+            val rightAndBottom = rightBottomPoint.split(",")
 
-        //竖屏
-        if (ScreenUtil.isPortrait(activity)) {
-            left = leftAndTop[0].toInt()
-            top = leftAndTop[1].toInt()
-            right = rightAndBottom[0].toInt()
-            bottom = rightAndBottom[1].toInt()
-        } else {
-            left = leftAndTop[1].toInt()
-            top = leftAndTop[0].toInt()
-            right = rightAndBottom[1].toInt()
-            bottom = rightAndBottom[0].toInt()
+            //竖屏
+            if (ScreenUtil.isPortrait(activity)) {
+                left = leftAndTop[0].toInt()
+                top = leftAndTop[1].toInt()
+                right = rightAndBottom[0].toInt()
+                bottom = rightAndBottom[1].toInt()
+            } else {
+                left = leftAndTop[1].toInt()
+                top = leftAndTop[0].toInt()
+                right = rightAndBottom[1].toInt()
+                bottom = rightAndBottom[0].toInt()
+            }
+            val notchRect = Rect(left, top, right, bottom)
+            notchInfoCallback.getNotchRect(notchRect)
+        } catch (e: Exception) {
+            Log.e("OppoNotchScreen", "getNotchInfo ${e.message}")
         }
-        val notchRect = Rect(left, top, right, bottom)
-        notchInfoCallback.getNotchRect(notchRect)
     }
 
 

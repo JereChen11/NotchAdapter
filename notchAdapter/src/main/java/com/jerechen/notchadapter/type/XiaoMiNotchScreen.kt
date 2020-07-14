@@ -16,21 +16,29 @@ class XiaoMiNotchScreen : INotchScreen {
     //参考文档： https://dev.mi.com/console/doc/detail?pId=1293
 
     override fun isContainNotch(activity: Activity): Boolean {
-
-        val getInt = Class.forName("android.os.SystemProperties").getMethod(
+        try {
+            val getInt = Class.forName("android.os.SystemProperties").getMethod(
                 "getInt",
                 String::class.java,
                 Int::class.javaPrimitiveType
             )
-        //值为1时则是 Notch 屏手机
-        val notchStatusId = getInt.invoke(null, "ro.miui.notch", 0) as Int
-        Log.e("jereTest", "isContainNotch = $notchStatusId")
-        return notchStatusId == 1
+            //值为1时则是 Notch 屏手机
+            val notchStatusId = getInt.invoke(null, "ro.miui.notch", 0) as Int
+            Log.e("jereTest", "isContainNotch = $notchStatusId")
+            return notchStatusId == 1
+        } catch (e: Exception) {
+            Log.e("XiaoMiNotchScreen", "isContainNotch ${e.message}")
+        }
+        return false
     }
 
     override fun getNotchInfo(activity: Activity, notchInfoCallback: INotchScreen.NotchInfoCallback) {
-        val notchRect = ScreenUtil.calculateNotchRect(activity, getNotchWidth(activity), getNotchHeight(activity))
-        notchInfoCallback.getNotchRect(notchRect)
+        try {
+            val notchRect = ScreenUtil.calculateNotchRect(activity, getNotchWidth(activity), getNotchHeight(activity))
+            notchInfoCallback.getNotchRect(notchRect)
+        } catch (e: Exception) {
+            Log.e("XiaoMiNotchScreen", "getNotchInfo ${e.message}")
+        }
     }
 
     /**
